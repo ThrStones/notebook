@@ -1,0 +1,55 @@
+{% extends "base/base.html" %}
+
+<!-- page start-->
+
+{% block header %}
+    <section class="panel">
+        <header class="panel-heading">
+            {{ chapter.name }}
+            <span class="pull-right">
+              {% comment %}<button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>{% endcomment %}
+              <a href="{% url 'readnovel:chapterList' novelInfo.id %}">
+                  <button type="button" id="reply-btn" class="btn btn-primary btn-xs">
+                      <i class="fa  fa-reply"></i> reply
+                  </button>
+              </a>
+          </span>
+        </header>
+    </section>
+{% endblock header %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel">
+                <div class="panel-body">
+                    <div class="m-left10">
+                        <h5>{{ chapter.content | linebreaks }}</h5>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--main content end-->
+    <div class="row">
+        <div class="col-md-12 col-md-offset-5">
+            <a href="{% url 'readnovel:chapterDetails' novelInfo.id chapter.serial_number -1 %}">
+                <button type="button" class="btn btn-round btn-primary"><i class="fa fa-hand-o-left"></i> 上一章</button>
+            </a>
+            {% if next_flag == 'true' %}
+                <a class="m-left20" href="{% url 'readnovel:chapterDetails' novelInfo.id chapter.serial_number 1 %}">
+                    <button type="button" class="btn btn-round btn-primary"><i class="fa fa-hand-o-right"></i> 下一章</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- page end-->
+
+{% block myscript %}
+    <script type="text/javascript">
+        $("#index").removeClass("active");
+        $("#novel").addClass("active");
+    </script>
+{% endblock myscript %}

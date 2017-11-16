@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+
+<!-- page start-->
+
+{% block header %}
+    <section class="panel">
+        <header class="panel-heading">
+            {{ novelInfo.name }}
+            <span class="pull-right">
+                  {% comment %}<button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>{% endcomment %}
+                  <a href="{% url 'readnovel:novelList' %}"><button type="button" id="reply-btn" class="btn btn-primary btn-xs"><i class="fa  fa-reply"></i> reply</button></a>
+              </span>
+        </header>
+    </section>
+{% endblock header %}
+
+{% block content %}
+    <div class="row">
+    {% for chapter in chapterList %}
+        <div class="col-lg-3">
+            <section class="panel">
+                <div class="panel-body ellipsis"><a href="{% url 'readnovel:chapterDetails' novelInfo.id chapter.serial_number 0 %}">{{ chapter.name }}</a></div>
+            </section>
+        </div>
+    {% empty %}
+        <div class="col-md-4 col-sm-4">
+            <div class="panel">
+                <div class="panel-body">
+                    <span class="col-md-6 col-sm-6">未更新章节，请点击更新按钮！</span>
+                    <a href="{% url 'readnovel:update_chapter' novelInfo.id %}"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> 更新章节 </button></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <!--main content end-->
+{% endblock content %}
+
+<!-- page end-->
+
+ {% block myscript %}
+     <script type="text/javascript">
+         $("#index").removeClass("active");
+         $("#novel").addClass("active");
+     </script>
+ {% endblock myscript %}

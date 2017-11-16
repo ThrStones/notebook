@@ -1,0 +1,137 @@
+{% extends "base/base.html" %}
+
+<!-- page start-->
+
+{% block header %}
+
+    <section class="panel">
+        <header class="panel-heading">
+            小说列表
+            <span class="pull-right">
+                  {% comment %}<button type="button" id="loading-btn" class="btn btn-info btn-xs"><i class="fa fa-refresh"></i> 刷新</button>{% endcomment %}
+                  <a data-toggle="modal" href="#addNovelModal"><button type="button" id="plus-btn" class="btn btn-primary btn-xs m-left10"><i class="fa fa-plus"></i> 新增</button></a>
+              </span>
+        </header>
+    </section>
+
+{% endblock header %}
+
+{% block content %}
+
+    {% if messages %}
+        <div class="alert alert-success alert-block fade in">
+          <button data-dismiss="alert" class="close close-sm" type="button">
+              <i class="fa fa-times"></i>
+          </button>
+            {% for message in messages %}
+                <p><i class="fa fa-ok-sign"></i>{{ message.message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="directory-info-row-own">
+        <div class="row">
+            {% for novel in novelList %}
+                <div class="col-md-4 col-sm-4">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="thumb media-object novel-img" src="{{ novel.website }}{{ novel.avatar }}" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4><a href="{% url 'readnovel:chapterList' novel.id %}">{{ novel.name }}</a><span class="text-muted small"> - {{ novel.category }}</span></h4>
+                                <div class="row p-details">
+                                    <div class="bio-row-own">
+                                        <span class="bold">作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者 </span>: {{ novel.author }}
+                                    </div>
+                                    <div class="bio-row-own">
+                                        <span class="bold">更新时间 </span>: {{ novel.latest_updatetime }}
+                                    </div>
+                                    <div class="bio-row-own">
+                                        <span class="bold">最新章节 </span>:  {{ novel.latest_chapter }}
+                                    </div>
+                                    <div class="bio-row-own">
+                                        <span class="bold">原网站链接 </span>:  <a href="{{ novel.website }}{{ novel.novelId }}"  target="_blank">{{ novel.website }}{{ novel.novelId }}</a>
+                                    </div>
+                                    <div class="bio-row-own">
+                                        <a href="{% url 'readnovel:update_novel' novel.id %}">
+                                            <button type="button" class="btn btn-info "><i class="fa fa-refresh"></i>更新基本信息 </button>
+                                        </a>
+                                        <a href="{% url 'readnovel:update_chapter' novel.id %}">
+                                            <button type="button" class="btn btn-info m-left10"><i class="fa fa-refresh"></i>更新章节</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <div class="col-md-4 col-sm-4">
+                <div class="panel">
+                    <div class="panel-body">
+                        <span class="col-md-3 col-sm-3">未添加小说</span>
+                        <a  data-toggle="modal" href="#addNovelModal"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> 新增</button></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- vertical center right side Modal start -->
+    <div class="modal fade modal-dialog-center right-modal-with-space" id="addNovelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content-wrap">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">添加小说</h4>
+                  </div>
+                  <div class="modal-body">
+                      <section class="panel">
+                          <header class="panel-heading">添加小说</header>
+                          <div class="panel-body">
+                              <form class="form-horizontal" role="form" action="{% url 'readnovel:add_novel' %}" method="post">
+                                  {% csrf_token %}
+                                  <div class="form-group">
+                                      <label for="inputEmail1" class="col-md-2 col-sm-2 control-label">网站</label>
+                                      <div class="col-md-10">
+                                          <input type="text" class="form-control" name="website" required readonly value="http://www.biqukan.com/">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="inputPassword1" class="col-md-2 col-sm-2 control-label">小说编号</label>
+                                      <div class="col-md-10">
+                                          <input type="text" class="form-control" name="novelId" required placeholder="Novel ID">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="col-md-offset-10 col-md-10">
+                                          <button type="submit" class="btn btn-info">添加</button>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- vertical center right side Modal end -->
+
+{% endblock content %}
+
+ {% block myscript %}
+     <script type="text/javascript">
+         $("#index").removeClass("active");
+         $("#novel").addClass("active");
+
+     </script>
+ {% endblock myscript %}
+
+<!-- page end-->
+

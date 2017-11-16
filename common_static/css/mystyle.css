@@ -1,0 +1,34 @@
+
+.novel-img {
+    height: 200px!important;
+}
+
+.bio-row-own {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    padding:0 15px;
+}
+
+.site-min-height-own {
+    min-height: 846px;
+}
+
+.directory-info-row-own {
+    display: inline-block;
+    margin-top: 0;
+    width: 100%;
+}
+
+.m-left10 {
+    margin-left: 10px;
+}
+.m-left20 {
+    margin-left: 20px;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
