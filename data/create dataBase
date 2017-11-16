@@ -1,0 +1,3 @@
+CREATE DATABASE `novel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+grant all privileges on novel.* to thrstones@localhost identified by 'ThrStones2017@';
+flush privileges;

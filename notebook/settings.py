@@ -24,8 +24,8 @@ SECRET_KEY = 'm^p+z9ykqxo+6pg$h^(cqstgbu4-un!5o3t*)@11vf661arf1b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.4']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['192.168.1.4']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -72,12 +72,24 @@ WSGI_APPLICATION = 'notebook.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'novel',
+        'USER': 'root',
+        'PASSWORD': 'ThrStones2018@',
+        'HOST': '47.94.2.31',
+        'PORT': '3306',
     }
 }
+
 #
 # DATABASES = {
 #     'default': {
